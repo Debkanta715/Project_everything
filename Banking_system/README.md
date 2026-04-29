@@ -1,6 +1,6 @@
 # Nodemailer with OAuth2 Setup (Node.js)
 
-This project demonstrates how to send emails using Nodemailer with OAuth2 authentication in a Node.js application.
+This  documentation demonstrates how to send emails using Nodemailer with OAuth2 authentication in a Node.js application.
 
 ## Features
 
