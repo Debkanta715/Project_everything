@@ -53,10 +53,12 @@ api is:- /api/auth/login
 async function login(req, res) {
   const { email, password } = req.body;
 
-  const user = usermodel.findOne({
-    // find the is alredey register or not
-    email,
-  });
+  const user = await usermodel
+    .findOne({
+      // find the is alredey register or not
+      email,
+    })
+    .select("+password"); // in the model we said password are not show for this password are not came here and for this we use .select("+password")
 
   if (!user) {
     // if not register then return this massegae
@@ -83,6 +85,15 @@ async function login(req, res) {
   );
 
   res.cookie("token", token); // sent to it in the cookie
+
+  res.status(200).json({
+    message: "user created sucessfully ",
+    user: {
+      _id: user._id,
+      email: user._email,
+      name: user.name,
+    },
+  });
 
   // final massage
 }
