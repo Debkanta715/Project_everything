@@ -1,4 +1,6 @@
 const usermodel = require("../models/user.model");
+// const emaiservices = require("../servives/email.service");
+const emaiservices = require("../servives/email.service");
 /* user registration controller 
 and the api is POST /api/auth/register
 */
@@ -44,6 +46,10 @@ async function userregistration(req, res) {
       name: user.name,
     },
   });
+
+  // email send after create a account
+
+  await emaiservices.sendRegistrationEmail(user.email, user.name);
 }
 
 /*

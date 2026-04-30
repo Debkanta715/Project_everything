@@ -19,7 +19,6 @@ const userschema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required for creating a account"],
     },
-
     password: {
       type: String,
       required: [true, "password is required for create an account "],
