@@ -201,3 +201,138 @@ https://mail.google.com/
 - https://developers.google.com/oauthplayground
 - https://github.com/ankurdotio/Difference-Backend-video/tree/main/026-nodemailer
 - https://console.cloud.google.com/projectselector2/apis/dashboard?supportedpurview=project
+
+
+
+# 📒 Ledger System for Transactions
+
+## 📌 Overview
+
+A ledger system records and tracks all transactions in a structured and reliable way.
+Each transaction creates a ledger entry, ensuring consistency, traceability, and auditability.
+
+This is commonly used in:
+
+* 💰 Payment systems
+* 🏦 Banking apps
+* 🛒 E-commerce platforms
+
+---
+
+## 📖 What is a Ledger?
+
+A **ledger** is a collection of transaction records.
+Each entry represents an action such as a **debit** or **credit**, stored permanently.
+
+---
+
+## 🎯 Why Use a Ledger System?
+
+* 📊 Track all transactions
+* 🧾 Maintain complete history
+* 🔒 Ensure data consistency
+* 🛡️ Prevent data loss or duplication
+* 🔍 Enable auditing and debugging
+
+---
+
+## 🧱 Core Data Structure
+
+Each ledger entry includes:
+
+* 👤 **userId** → Reference to user (ObjectId)
+* 🔄 **type** → `debit` or `credit`
+* 💵 **amount** → Transaction value
+* 💼 **balance** → Updated balance
+* 📝 **description** → Optional details
+* 📌 **status** → `pending`, `completed`, `failed`
+* ⏱️ **timestamps** → createdAt, updatedAt
+
+---
+
+## 🗄️ Database Schema (MongoDB + Mongoose)
+
+```js id="p3d82x"
+const mongoose = require('mongoose');
+
+const ledgerSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  type: {
+    type: String,
+    enum: ['debit', 'credit'],
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  balance: {
+    type: Number,
+    required: true
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'completed', 'failed'],
+    default: 'completed'
+  }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Ledger', ledgerSchema);
+```
+
+---
+
+## ⚙️ How It Works
+
+1. 👤 User performs a transaction
+2. ✅ System validates input
+3. 🧮 Balance is calculated
+4. 📝 Ledger entry is created
+5. 💾 Entry is stored permanently
+6. 🔎 Data can be retrieved anytime
+
+---
+
+## 🧾 Example Ledger Entry
+
+```json id="l9w2k1"
+{
+  "userId": "64f1a2b3c4d5e6f7890abc12",
+  "type": "debit",
+  "amount": 500,
+  "balance": 1500,
+  "description": "Payment for order",
+  "status": "completed"
+}
+```
+
+---
+
+## ✅ Best Practices
+
+* 🚫 Never delete ledger entries
+* 🔁 Keep records immutable
+* 📌 Use enums for controlled values
+* 🔍 Validate all inputs
+* ⚡ Keep operations atomic
+* ⏱️ Always use timestamps
+
+---
+
+## 🧠 Summary
+
+A ledger system ensures every transaction is:
+
+* 📌 Recorded
+* 🔍 Traceable
+* 🔒 Reliable
+
+It is essential for building secure and scalable transaction-based applications.
