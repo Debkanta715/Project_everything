@@ -135,7 +135,7 @@ async function sendRegistrationEmail(userEmail, name) {
           <!-- FOOTER -->
           <tr>
             <td style="background:#13151f;padding:24px 40px;border-top:1px solid #2a2d40;text-align:center;">
-              <p style="color:#d4af37;font-size:14px;margin:0 0 4px;font-family:Georgia,serif;">Debkanat Dey</p>
+              <p style="color:#d4af37;font-size:14px;margin:0 0 4px;font-family:Georgia,serif;">Debkanta Dey</p>
               <p style="color:#5a6b80;font-size:10px;margin:0;letter-spacing:2.5px;font-family:Arial,sans-serif;text-transform:uppercase;">D Tech Banking Backend Team</p>
               <div style="width:40px;height:1px;background:rgba(212,175,55,0.3);margin:16px auto;"></div>
               <p style="color:#3a4a5c;font-size:10px;margin:0;font-family:Arial,sans-serif;">
