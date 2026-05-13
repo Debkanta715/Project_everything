@@ -1,52 +1,151 @@
-# Nodemailer with OAuth2 Setup (Node.js)
+# Banking System
 
-This  documentation demonstrates how to send emails using Nodemailer with OAuth2 authentication in a Node.js application.
+A simple yet powerful banking application built with Node.js and Express, featuring user authentication and account management.
 
-## Features
+## 🎯 Features
 
-- Email validation using regex
-- Password hashing using bcrypt
-- Token generation using jsonwebtoken
-- Cookie handling using cookie-parser
-- Email sending using Nodemailer with OAuth2
+- **User Authentication** - Secure registration and login using JWT and bcrypt
+- **Account Management** - Create and manage bank accounts
+- **Email Notifications** - Automated email notifications for account activities
+- **Password Security** - Bcrypt encryption for password hashing
+- **Token-based Authentication** - JWT for secure API access
 
-## Technologies Used
+## 🛠️ Tech Stack
 
-- Node.js
-- Nodemailer
-- Google OAuth2
-- dotenv
-- bcrypt
-- jsonwebtoken
-- cookie-parser
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Node.js | Latest | Runtime environment |
+| Express | ^5.2.1 | Web framework |
+| MongoDB | - | Database (via Mongoose) |
+| Mongoose | ^9.5.0 | ODM for MongoDB |
+| JWT | ^9.0.3 | Authentication tokens |
+| bcrypt | ^6.0.0 | Password hashing |
+| Nodemailer | ^8.0.7 | Email notifications |
+| Dotenv | ^17.4.2 | Environment variables |
+| Cookie Parser | ^1.4.7 | Cookie parsing middleware |
 
----
+## 📁 Project Structure
 
-## Installation
-
-Initialize a Node.js project:
-
-```bash
-npm init -y
+```
+Banking/
+├── src/
+│   ├── app.js                  # Express app configuration
+│   ├── controllers/
+│   │   ├── account.controller.js    # Account management logic
+│   │   └── auth.controllers.js      # Authentication logic
+│   ├── db/
+│   │   └── db.js               # Database connection
+│   ├── middlewares/
+│   │   └── auth.middleware.js   # JWT verification middleware
+│   ├── models/
+│   │   ├── account.model.js     # Account schema
+│   │   └── user.model.js        # User schema
+│   ├── routers/
+│   │   ├── account.routes.js    # Account routes
+│   │   └── auth.routes.js       # Auth routes
+│   └── servives/
+│       └── email.service.js     # Email notification service
+├── server.js                   # Entry point
+├── package.json
+└── README.md
 ```
 
-Install dependencies:
+## 🚀 Getting Started
 
+### Prerequisites
+- Node.js 14+
+- npm or yarn
+- MongoDB database
+- Email service credentials (for Nodemailer)
+
+### Installation
+
+1. Clone or navigate to the Banking directory:
 ```bash
-npm install nodemailer dotenv bcrypt jsonwebtoken cookie-parser
+cd Banking
 ```
 
----
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Google OAuth2 Setup
+3. Create a `.env` file with your configuration:
+```env
+PORT=2001
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_email_password
+```
 
-### 1. Create Project
+4. Start the server:
+```bash
+npm run dev      # Development with auto-reload
+# or
+npm start        # Production
+```
 
-Go to:
-https://console.cloud.google.com/projectselector2/apis/dashboard?supportedpurview=project
+The server will run on `http://localhost:2001`
 
-- Create a new project
-- Enable **Gmail API**
+## 📡 API Endpoints
+
+### Authentication Routes (`/api/auth`)
+- `POST /register` - Register a new user
+- `POST /login` - Login user
+- `POST /logout` - Logout user
+
+### Account Routes (`/api/accounts`)
+- `GET /` - Get all accounts
+- `GET /:id` - Get account by ID
+- `POST /` - Create new account
+- `PUT /:id` - Update account
+- `DELETE /:id` - Delete account
+
+## 🔐 Security Features
+
+- **Password Hashing** - bcrypt for secure password storage
+- **JWT Authentication** - Token-based API authentication
+- **Cookie Parser** - Secure cookie handling
+- **Environment Variables** - Sensitive data in `.env` files
+
+## 🔧 Scripts
+
+- `npm run dev` - Start development server with nodemon (auto-reload)
+- `npm start` - Start production server
+- `npm test` - Run tests (not configured)
+
+## 📧 Email Service
+
+The application uses Nodemailer for sending email notifications. Configure your email service in the `.env` file:
+- Supports Gmail, custom SMTP servers, and other email providers
+- Automated notifications for:
+  - Account creation
+  - Password reset
+  - Transaction alerts
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| MongoDB connection error | Check `MONGODB_URI` in `.env` |
+| JWT token invalid | Verify `JWT_SECRET` is set correctly |
+| Email not sending | Check Nodemailer credentials and SMTP settings |
+| Port already in use | Change port in `server.js` or kill process using port 2001 |
+
+## 📝 Notes
+
+- The `servives` folder contains email service logic (note: typo in folder name)
+- Authentication middleware validates JWT tokens on protected routes
+- All passwords are hashed using bcrypt before storage
+
+## 🤝 Contributing
+
+Feel free to submit issues and enhancement requests!
+
+## 📄 License
+
+ISC
 
 ---
 
