@@ -87,6 +87,8 @@ https://mail.google.com/
 - Click **Exchange authorization code for tokens**
 - Copy the **Refresh Token**
 
+If you keep seeing `invalid_grant: Token has been expired or revoked`, the refresh token is no longer valid. Generate a new refresh token and replace the one in `.env`, or use a Gmail app password instead of OAuth2.
+
 ---
 
 ## Environment Variables
@@ -98,7 +100,10 @@ CLIENT_ID=your-client-id
 CLIENT_SECRET=your-client-secret
 REFRESH_TOKEN=your-refresh-token
 EMAIL_USER=your-email@gmail.com
+EMAIL_APP_PASSWORD=your-16-char-gmail-app-password
 ```
+
+If you use `EMAIL_APP_PASSWORD`, remove the OAuth2 values or leave them unset.
 
 ---
 

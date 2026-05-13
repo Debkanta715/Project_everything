@@ -1,21 +1,50 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-  //transporter is used for the communiate with smtp server in the google and send the particular email
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: process.env.EMAIL_USER,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-  },
-});
+const createTransporter = () => {
+  if (process.env.EMAIL_APP_PASSWORD) {
+    return nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD,
+      },
+    });
+  }
+
+  const hasOAuthCredentials =
+    process.env.CLIENT_ID &&
+    process.env.CLIENT_SECRET &&
+    process.env.REFRESH_TOKEN;
+
+  if (hasOAuthCredentials) {
+    return nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.EMAIL_USER,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+      },
+    });
+  }
+
+  throw new Error(
+    "Email credentials are missing. Set CLIENT_ID, CLIENT_SECRET, and REFRESH_TOKEN for OAuth2 or EMAIL_APP_PASSWORD for Gmail SMTP."
+  );
+};
+
+const transporter = createTransporter();
 
 // Verify the connection configuration
 transporter.verify((error, success) => {
   if (error) {
+    if (error.code === "EAUTH" && /invalid_grant/i.test(String(error.message))) {
+      console.error(
+        "Gmail OAuth2 token is expired or revoked. Generate a new refresh token or switch to EMAIL_APP_PASSWORD."
+      );
+    }
     console.error("Error connecting to email server:", error);
   } else {
     console.log("Email server is ready to send messages");
